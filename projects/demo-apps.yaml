@@ -1,0 +1,10 @@
+---
+apiVersion: skyway.realtor.com/v1alpha1
+kind: GitopsProject
+metadata:
+  name: demo-apps
+  namespace: crossplane-system
+  annotations:
+    crossplane.io/external-name: demo-apps
+spec:
+  name: demo-apps

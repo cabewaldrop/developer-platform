@@ -6,7 +6,7 @@ metadata:
 spec:
   compositeTypeRef:
     apiVersion: skyway.realtor.com/v1alpha1
-    kind: GitopsProject
+    kind: xGitopsProject
   resources:
     - name: Namespace
       base:
@@ -14,31 +14,49 @@ spec:
         kind: Object
         metadata:
           name: PATCHED
+          annotations:
+            "crossplane.io/external-name": PATCHED
         spec:
           forProvider:
+            name: PATCHED
             manifest:
               apiVersion: v1
               kind: Namespace
           providerConfigRef:
             name: kubernetes-provider
-        patches:
-          - type: FromCompositeFieldPath
-            fromFieldPath: "spec.name"
-            toFieldPath: "metadata.name"
+      patches:
+        - type: FromCompositeFieldPath
+          fromFieldPath: "spec.name"
+          toFieldPath: "metadata.name"
+        - type: FromCompositeFieldPath
+          fromFieldPath: "spec.name"
+          toFieldPath: "spec.forProvider.name"
+        - type: FromCompositeFieldPath
+          fromFieldPath: "spec.name"
+          toFieldPath: "metadata.annotations['crossplane.io/external-name']"
     - name: ArgoCDProject
       base:
         apiVersion: projects.argocd.crossplane.io/v1alpha1
         kind: Project
         metadata:
           name: PATCHED
+          annotations:
+            "crossplane.io/external-name": PATCHED
         spec:
-          forProvider: {}
+          forProvider:
+            name: PATCHED
           providerConfigRef:
             name: provider-argocd
-        patches:
-          - type: FromCompositeFieldPath
-            fromFieldPath: "spec.name"
-            toFieldPath: "metadata.name"
+      patches:
+        - type: FromCompositeFieldPath
+          fromFieldPath: "spec.name"
+          toFieldPath: "metadata.name"
+        - type: FromCompositeFieldPath
+          fromFieldPath: "spec.name"
+          toFieldPath: "spec.forProvider.name"
+        - type: FromCompositeFieldPath
+          fromFieldPath: "spec.name"
+          toFieldPath: "metadata.annotations['crossplane.io/external-name']"
 ---
 apiVersion: apiextensions.crossplane.io/v1
 kind: CompositeResourceDefinition
