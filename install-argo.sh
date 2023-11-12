@@ -1,3 +1,20 @@
+##########################################################
+# Using this script:
+#
+# This script assumes you have the following installed
+# 1. kubectl
+# 2. krew and its view-secret plugin
+# 3. jq
+# 4. gh (Github cli)
+#
+# Before running the script ensure you have logged in to
+# github with the gh tool.
+#
+# `gh auth login`
+#
+##########################################################
+
+
 # Create the argocd namespace if it does not already exist
 kubectl create namespace argocd --dry-run=client -o yaml | kubectl apply -f -
 
@@ -52,6 +69,15 @@ ARGOCD_TOKEN=$(curl -s -X POST -k -H "Authorization: Bearer $ARGOCD_ADMIN_TOKEN"
 # Create the crossplane-system namespace if it does not already exist
 kubectl create namespace argocd --dry-run=client -o yaml | kubectl apply -f -
 
-# Create a kubernetes secret with the token. This will be used as a
+# Create a kubernetes secret with the argocd token. This will be used as a
 # provider-config in crossplane
 kubectl create secret generic argocd-credentials -n crossplane-system --from-literal=authToken="$ARGOCD_TOKEN"
+
+# Retrieve the github token associated with gh. This assumes you have gh installed
+# and have run gh auth login
+GITHUB_TOKEN=$(gh auth token)
+GITHUB_OWNER=cabewaldrop # Replace with github username if not cabewaldrop
+
+# Create a kubernetes secret with the Github credentials. This will be used as
+# part of a provider-config in crossplane
+kubectl create secret generic github-credentials -n crossplane-system --from-literal=credentials="{\"token\":\"${GITHUB_TOKEN}\",\"owner\":\"${GITHUB_OWNER}\"}"

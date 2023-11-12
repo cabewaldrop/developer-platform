@@ -1,0 +1,5 @@
+---
+apiVersion: v2
+name: developer-platform-crossplane-provider-github
+version: 0.0.1
+description: Install provider-github as part of the developer-platform
