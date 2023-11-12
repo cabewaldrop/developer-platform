@@ -1,0 +1,67 @@
+---
+apiVersion: apiextensions.crossplane.io/v1
+kind: Composition
+metadata:
+  name: gitops-project
+spec:
+  compositeTypeRef:
+    apiVersion: skyway.realtor.com/v1alpha1
+    kind: GitopsProject
+  resources:
+    - name: Namespace
+      base:
+        apiVersion: kubernetes.crossplane.io/v1alpha1
+        kind: Object
+        metadata:
+          name: PATCHED
+        spec:
+          forProvider:
+            manifest:
+              apiVersion: v1
+              kind: Namespace
+          providerConfigRef:
+            name: kubernetes-provider
+        patches:
+          - type: FromCompositeFieldPath
+            fromFieldPath: "spec.name"
+            toFieldPath: "metadata.name"
+    - name: ArgoCDProject
+      base:
+        apiVersion: projects.argocd.crossplane.io/v1alpha1
+        kind: Project
+        metadata:
+          name: PATCHED
+        spec:
+          forProvider: {}
+          providerConfigRef:
+            name: provider-argocd
+        patches:
+          - type: FromCompositeFieldPath
+            fromFieldPath: "spec.name"
+            toFieldPath: "metadata.name"
+---
+apiVersion: apiextensions.crossplane.io/v1
+kind: CompositeResourceDefinition
+metadata:
+  name: xgitopsprojects.skyway.realtor.com
+spec:
+  group: skyway.realtor.com
+  names:
+    kind: xGitopsProject
+    plural: xgitopsprojects
+  claimNames:
+    kind: GitopsProject
+    plural: gitopsprojects
+  versions:
+    - name: v1alpha1
+      served: true
+      referenceable: true
+      schema:
+        openAPIV3Schema:
+          type: object
+          properties:
+            spec:
+              type: object
+              properties:
+                name:
+                  type: string

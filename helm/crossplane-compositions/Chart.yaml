@@ -1,0 +1,5 @@
+---
+apiVersion: v2
+name: developer-platform-crossplane-compositions
+version: 0.0.1
+description: Install platform specific crossplane compositions
