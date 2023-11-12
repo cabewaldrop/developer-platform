@@ -1,0 +1,27 @@
+---
+apiVersion: pkg.crossplane.io/v1
+kind: Provider
+metadata:
+  name: provider-argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  package: xpkg.upbound.io/crossplane-contrib/provider-argocd:v0.4.0
+---
+apiVersion: argocd.crossplane.io/v1alpha1
+kind: ProviderConfig
+metadata:
+  name: argocd-provider
+  annotations:
+    argocd.argoproj.io/sync-wave: "3"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+spec:
+  serverAddr: argocd-server.argocd.svc:443
+  insecure: true
+  plainText: false
+  credentials:
+    source: Secret
+    secretRef:
+      namespace: crossplane-system
+      name: argocd-credentials
+      key: authToken
