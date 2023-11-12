@@ -1,0 +1,9 @@
+---
+apiVersion: v2
+name: developer-platform-crossplane 
+version: 0.0.1
+description: Install crossplane as part of the developer-platform 
+dependencies:
+  - name: crossplane 
+    version: 1.14.0
+    repository: https://charts.crossplane.io/master
