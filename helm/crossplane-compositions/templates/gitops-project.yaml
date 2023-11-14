@@ -74,7 +74,7 @@ spec:
         metadata:
           name: PATCHED
           annotations:
-            "crossplane.io/external-name": PATCHED
+            "crossplane.io/external-name": cabewaldrop/demo-apps
             "skyway.realtor.com/project-name": PATCHED
         spec:
           forProvider:
@@ -95,9 +95,9 @@ spec:
         - type: FromCompositeFieldPath
           fromFieldPath: "spec.name"
           toFieldPath: "metadata.name"
-        - type: FromCompositeFieldPath
-          fromFieldPath: "spec.name"
-          toFieldPath: "metadata.annotations['crossplane.io/external-name']"
+        # - type: FromCompositeFieldPath
+        #   fromFieldPath: "spec.name"
+        #   toFieldPath: "metadata.annotations['crossplane.io/external-name']"
         - type: FromCompositeFieldPath
           fromFieldPath: "spec.name"
           toFieldPath: "metadata.labels['skyway.realtor.com/project-name']"
