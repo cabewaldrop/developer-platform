@@ -132,7 +132,7 @@ spec:
           toFieldPath: "metadata.labels['skyway.realtor.com/project-name']"
         - type: FromCompositeFieldPath
           fromFieldPath: "spec.name"
-          toFieldPath: "spec.respositorySelector.matchLabels['skyway.realtor.com/project-name']"
+          toFieldPath: "spec.forProvider.respositorySelector.matchLabels['skyway.realtor.com/project-name']"
 ---
 apiVersion: apiextensions.crossplane.io/v1
 kind: CompositeResourceDefinition
