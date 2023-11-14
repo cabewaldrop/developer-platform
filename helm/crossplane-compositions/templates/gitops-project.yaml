@@ -111,9 +111,9 @@ spec:
             "skyway.realtor.com/project-name": PATCHED
         spec:
           forProvider:
-            commitAuthor: Terraform User
-            commitEmail: terraform@example.com
-            commitMessage: Managed by Terraform
+            commitAuthor: Cabe Waldrop
+            commitEmail: cabe.waldrop1985@gmail.com
+            commitMessage: Testing things out
             content: "**/*.tfstate"
             file: .gitignore
             overwriteOnCreate: true
