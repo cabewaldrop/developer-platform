@@ -103,6 +103,8 @@ spec:
           toFieldPath: "metadata.labels['skyway.realtor.com/project-name']"
     - name: Prod appset
       base:
+        apiVersion: repo.github.upbound.io/v1alpha1
+        kind: RepositoryFile
         metadata:
           name: argocd-appset-prod
           labels:
