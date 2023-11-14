@@ -75,6 +75,7 @@ spec:
           name: PATCHED
           annotations:
             "crossplane.io/external-name": cabewaldrop/demo-apps
+          labels:
             "skyway.realtor.com/project-name": PATCHED
         spec:
           forProvider:
