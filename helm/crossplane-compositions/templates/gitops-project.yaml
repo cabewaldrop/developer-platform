@@ -102,12 +102,12 @@ spec:
         - type: FromCompositeFieldPath
           fromFieldPath: "spec.name"
           toFieldPath: "metadata.labels['skyway.realtor.com/project-name']"
-    - name: Prod appset
+    - name: Dev appset
       base:
         apiVersion: repo.github.upbound.io/v1alpha1
         kind: RepositoryFile
         metadata:
-          name: argocd-appset-prod
+          name: argocd-appset-dev
           labels:
             "skyway.realtor.com/project-name": PATCHED
         spec:
@@ -116,8 +116,14 @@ spec:
             commitAuthor: Cabe Waldrop
             commitEmail: cabe.waldrop1985@gmail.com
             commitMessage: Testing things out
-            content: "**/*.tfstate"
-            file: .gitignore
+            content: |
+              ---
+              apiVersion: argoproj.io/v1alpha1
+              kind: ApplicationSet
+              metadata:
+                name: demo-apps
+                namespace: argo
+            file: argo/dev/applicationset.yaml
             overwriteOnCreate: true
             repositorySelector:
               matchLabels:
