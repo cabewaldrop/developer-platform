@@ -16,6 +16,8 @@ spec:
           name: PATCHED
           annotations:
             "crossplane.io/external-name": PATCHED
+          labels:
+            "skyway.realtor.com/project-name": PATCHED
         spec:
           forProvider:
             name: PATCHED
@@ -34,6 +36,9 @@ spec:
         - type: FromCompositeFieldPath
           fromFieldPath: "spec.name"
           toFieldPath: "metadata.annotations['crossplane.io/external-name']"
+        - type: FromCompositeFieldPath
+          fromFieldPath: "spec.name"
+          toFieldPath: "metadata.labels['skyway.realtor.com/project-name']"
     - name: ArgoCDProject
       base:
         apiVersion: projects.argocd.crossplane.io/v1alpha1
@@ -42,6 +47,8 @@ spec:
           name: PATCHED
           annotations:
             "crossplane.io/external-name": PATCHED
+          labels:
+            "skyway.realtor.com/project-name": PATCHED
         spec:
           forProvider:
             name: PATCHED
@@ -57,6 +64,9 @@ spec:
         - type: FromCompositeFieldPath
           fromFieldPath: "spec.name"
           toFieldPath: "metadata.annotations['crossplane.io/external-name']"
+        - type: FromCompositeFieldPath
+          fromFieldPath: "spec.name"
+          toFieldPath: "metadata.labels['skyway.realtor.com/project-name']"
     - name: GithubRepository
       base:
         apiVersion: repo.github.upbound.io/v1alpha1
@@ -65,6 +75,7 @@ spec:
           name: PATCHED
           annotations:
             "crossplane.io/external-name": PATCHED
+            "skyway.realtor.com/project-name": PATCHED
         spec:
           forProvider:
             allowRebaseMerge: true
@@ -87,6 +98,39 @@ spec:
         - type: FromCompositeFieldPath
           fromFieldPath: "spec.name"
           toFieldPath: "metadata.annotations['crossplane.io/external-name']"
+        - type: FromCompositeFieldPath
+          fromFieldPath: "spec.name"
+          toFieldPath: "metadata.labels['skyway.realtor.com/project-name']"
+    - name: Prod appset
+      base:
+        metadata:
+          name: argocd-appset-prod
+          labels:
+            "skyway.realtor.com/project-name": PATCHED
+        spec:
+          forProvider:
+            commitAuthor: Terraform User
+            commitEmail: terraform@example.com
+            commitMessage: Managed by Terraform
+            content: "**/*.tfstate"
+            file: .gitignore
+            overwriteOnCreate: true
+            repositorySelector:
+              matchLabels:
+                skyway.realtor.com/project-name: PATCHED
+      patches:
+        - type: FromCompositeFieldPath
+          fromFieldPath: "spec.name"
+          toFieldPath: "metadata.name"
+        - type: FromCompositeFieldPath
+          fromFieldPath: "spec.name"
+          toFieldPath: "metadata.annotations['crossplane.io/external-name']"
+        - type: FromCompositeFieldPath
+          fromFieldPath: "spec.name"
+          toFieldPath: "metadata.labels['skyway.realtor.com/project-name']"
+        - type: FromCompositeFieldPath
+          fromFieldPath: "spec.name"
+          toFieldPath: "respositorySelector.matchLabels['skyway.realtor.com/project-name']"
 ---
 apiVersion: apiextensions.crossplane.io/v1
 kind: CompositeResourceDefinition
