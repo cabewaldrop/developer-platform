@@ -111,6 +111,7 @@ spec:
             "skyway.realtor.com/project-name": PATCHED
         spec:
           forProvider:
+            branch: main
             commitAuthor: Cabe Waldrop
             commitEmail: cabe.waldrop1985@gmail.com
             commitMessage: Testing things out
