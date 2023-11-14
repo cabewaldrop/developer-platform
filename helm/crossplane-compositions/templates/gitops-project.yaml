@@ -120,6 +120,8 @@ spec:
             repositorySelector:
               matchLabels:
                 skyway.realtor.com/project-name: PATCHED
+          providerConfigRef:
+            name: provider-github
       patches:
         - type: FromCompositeFieldPath
           fromFieldPath: "spec.name"
